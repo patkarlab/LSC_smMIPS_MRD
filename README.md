@@ -1,4 +1,4 @@
-# smMIPS MRD for LSC project
+# smMIPS MRD workflow description
 
 This repository describes the workflow for analysing MRD samples sequenced using smMIPS assay.  
 .  
@@ -24,7 +24,7 @@ Please check for empty lines in the samplesheet before running the pipeline.
 
 3. To execute the pipeline, use the following command
 ```bash
-nextflow -C mrd_capture.config run mrd_capture.nf -entry MRD_PROBE -bg -profile docker -resume
+nextflow -C nextflow.config run sal_mips.nf -entry MIPS -bg -profile docker -resume
 ```
 
 ## Output
