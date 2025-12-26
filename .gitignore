@@ -2,7 +2,7 @@
 sequences/
 work/
 samplesheet.csv
-Final_Output*
+Final_Output*/
 .nextflow/
 .nextflow.pid
 *.log
