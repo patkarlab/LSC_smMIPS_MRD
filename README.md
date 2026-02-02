@@ -1,13 +1,14 @@
 # smMIPS MRD workflow description
 
-This repository describes the workflow for analysing MRD samples sequenced using smMIPS assay.  
-.  
+This repository describes the workflow for analysing MRD samples sequenced using smMIPS assay. Detailed steps to generate the site and mutation specific error model are mentioned in error_model.md file
 
 ## Usage
-The following parameters need to be modified in the `params` section of the `nextflow.config` : 
+The following parameters need to be modified in the `params` section of the `nextflow.config` before executing the workflow : 
 - *genome* = Complete path to the human genome fasta file(hg19_all.fasta). Please ensure that the BWA index files (hg19_all.fasta.fai, hg19_all.fasta.amb, hg19_all.fasta.ann, hg19_all.fasta.bwt, hg19_all.fasta.pac, hg19_all.fasta.sa) are also present in the same genome folder. The assests folder currently contains placeholder genome and index files.
 
-- *annovar_db* = Complete path to the humandb database folder for ANNOVAR (refer https://annovar.openbioinformatics.org/en/latest/user-guide/startup/ )
+- *annovar_humandb* = Complete path to the humandb database folder for [ANNOVAR](https://annovar.openbioinformatics.org/en/latest/user-guide/startup/ "annovar site")
+
+- *gen_ref*	= Complete path to the gene_fullxref.txt file as downloaded from the [ANNOVAR](https://annovar.openbioinformatics.org/en/latest/user-guide/startup/ "annovar site") site
 
 - *bedfile* = This file needs to be updated based on the probes used for the assay
 
@@ -28,4 +29,4 @@ nextflow -C nextflow.config run sal_mips.nf -entry MIPS -bg -profile docker -res
 ```
 
 ## Output
-Samplewise output folders are written to `Final_output/` folder.
+Samplewise output folders are written to the folder name mentioned in the `outdir` param in the config file.
