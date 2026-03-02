@@ -1,8 +1,9 @@
 *.log*
-sequences/
+sequences/*
 work/
 samplesheet.csv
 Final_Output*/
 .nextflow/
 .nextflow.pid
 *.log
+!sequences/sample_*.fastq.gz
