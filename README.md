@@ -17,11 +17,11 @@ flowchart LR
 	F --> G["Split MIPS
     Foward & Reverse(F&R)"]
 
-    G --> P["Combine
+	G --> P["Combine
 	Counts"]
-    G --> H["Call Consensus → SAMTOOLS → FASTQ → Mpileup → VariantCall (F&R)"]
-    
-    H --> I["Combine
+	G --> H["Call Consensus → SAMTOOLS → FASTQ → Mpileup → VariantCall (F&R)"]
+
+	H --> I["Combine
 	VCF"] 
 	I --> J["Annotate 
 	SNPs"] --> K["Format
@@ -31,13 +31,13 @@ flowchart LR
 	Correction"]
 	I --> M["Annotate
 	INDELS"] --> N["Format
-	INDELS"]
+	INDELS"] --- dummy1(( ))
 
 	P --> Q["Final
 	Output"]
 	L --> Q["Final
 	Output"]
-	N --> Q["Final
+	dummy1 --> Q["Final
 	Output"]
 ```
 ## References
