@@ -2,7 +2,7 @@
 ## Introduction
 
 &emsp;This repository describes the bioinformatics workflow for analysing MRD samples sequenced using smMIPS based panel. Sample libraries were sequenced on a NovaseqX platform using 2x150 bp reads. Each sample was allocated ~40 million reads. This panel consists of 147 smMIPS covering 18 commonly mutated hotspot genes in AML. Regions covered by these probes are mentioned in the .txt and .txtR files present in the ``assets`` folder. Each probe has a 4 bp UMI tag at both ends which is combined in a 8 bp molecular tag.  
-&emsp; Reads were preprocessed using to remove adapters and low quality bases (Q<20). Filtered reads were paired-end assembled and mapped to the human genome (build hg19). Reads originating from the same UMI family were collapsed to obtain consensus reads. Pileup of these reads was obtained after realigning them. Variant calling was performed using a customized variant caller followed by annotation. A site and mutation-specific error model was used to distinguish true SNPs from the background noise. Detailed steps to generate the site and mutation specific error model are mentioned in [error model md](error_model.md) file. 
+&emsp; Reads were preprocessed using to remove adapters and low quality bases. Filtered reads were paired-end assembled and mapped to the human genome (build hg19). Reads originating from the same UMI family were collapsed to obtain consensus reads. Pileup of these reads was obtained after realigning them. Variant calling was performed using a customized variant caller followed by annotation. A site and mutation-specific error model was used to distinguish true SNPs from the background noise. Detailed steps to generate the site and mutation specific error model are mentioned in [error model md](error_model.md) file. 
 
 ## Pipeline summary
 ```mermaid
@@ -19,7 +19,7 @@ flowchart LR
 
 	G --> P["Combine
 	Counts"]
-	G --> H["Call Consensus → SAMTOOLS → FASTQ → Mpileup → VariantCall (F&R)"]
+	G --> H["Call Consensus -> SAMTOOLS -> FASTQ -> Mpileup -> VariantCall (F&R)"]
 
 	H --> I["Combine
 	VCF"] 
@@ -40,6 +40,17 @@ flowchart LR
 	dummy1 --> Q["Final
 	Output"]
 ```
+## Pipeline structure
+This repository loosely follows the nfcore pipeline structure.
+```
+assets/			# Folder containing reference files
+bin/			# Folder with scripts called in the pipeline
+ErrorModel/		# Folder with input files and scripts for generating the error model	
+modules/		# Folder containing individual process descriptions
+sequences/		# Input sequences 
+sal_mips.nf		# Nextflow file defining the pipeline 
+nextflow.config	# File describing input parameters and computing resources for individual processes
+```
 ## References
 Execution of this pipeline requires certain reference files. These need to be downloaded and the following parameters need to be modified in the `params` section of the `nextflow.config` before executing the workflow : 
 - *genome* = Complete path to the human genome fasta file(hg19_all.fasta). Please ensure that the BWA index files (hg19_all.fasta.fai, hg19_all.fasta.amb, hg19_all.fasta.ann, hg19_all.fasta.bwt, hg19_all.fasta.pac, hg19_all.fasta.sa) are also present in the same genome folder. The assests folder currently contains placeholder genome and index files.
@@ -55,15 +66,21 @@ Execution of this pipeline requires certain reference files. These need to be do
 Parameters *smMIPS_txt_file* and *smMIPS_txtR_file* provide the location of files containing smMIP list on the forward and reverse strand respectively. *matrix* parameter gives the location of file with alpha and beta values of the error model. *indel_filter_list* is a list if INDELS present in 3 or more biological negative controls used to train the model. 
 
 ## Usage
-1. Transfer the sample input files `*.fastq.gz` inside the `sequences/` folder.
+1. Clone the repository using ```git clone git@github.com:patkarlab/LSC_smMIPS_MRD.git```
 
-2. Modify the `samplesheet.csv`. The sample_ids, without the file extension, should be mentioned in samplesheet in the following format - <br>
+2. Enter the directory ```cd LSC_smMIPS_MRD```  
+
+3. Download the reference as mentioned in the Reference section above.  
+
+4. Transfer the sample input files `*.fastq.gz` inside the `sequences/` folder.
+
+5. Modify the `samplesheet.csv`. The sample_ids, without the file extension, should be mentioned in samplesheet in the following format - <br>
 sample1  
 sample2  
 sample3  
-Please check for empty lines in the samplesheet before running the pipeline.
+Please remove any empty lines in the samplesheet before running the pipeline.
 
-3. To execute the pipeline, use the following command
+3. To launch the pipeline, use the following command
 ```bash
 nextflow -C nextflow.config run sal_mips.nf -entry MIPS -bg -profile docker -resume
 ```
