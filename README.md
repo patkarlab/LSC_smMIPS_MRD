@@ -1,4 +1,17 @@
 # smMIPS MRD workflow description
+
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Pipeline summary](#pipeline-summary)
+3. [Pipeline structure](#pipeline-structure)
+4. [References](#requirements)
+5. [Usage](#usage)
+6. [Output](#output)
+7. [Citation](#citation)
+8. [Contact](#contact)
+
+
 ## Introduction
 
 &emsp;This repository describes the bioinformatics workflow for analysing MRD samples sequenced using smMIPS based panel. Sample libraries were sequenced on a NovaseqX platform using 2x150 bp reads. Each sample was allocated ~40 million reads. This panel consists of 147 smMIPS covering 18 commonly mutated hotspot genes in AML. Regions covered by these probes are mentioned in the .txt and .txtR files present in the ``assets`` folder. Each probe has a 4 bp UMI tag at both ends which is combined in a 8 bp molecular tag.  
